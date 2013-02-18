@@ -3,11 +3,12 @@
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
+var express     = require('express')
+  , routes      = require('./routes')
+  , Controllers = require('./controllers')
+  , user        = require('./routes/user')
+  , http        = require('http')
+  , path        = require('path');
 
 var app = express();
 
@@ -28,6 +29,9 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
+
+app.controllers = new Controllers(app);
+app.controllers.init();
 
 app.get('/', routes.index);
 app.get('/users', user.list);
